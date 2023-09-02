@@ -1,0 +1,26 @@
+keep Django version less than 4
+pip install pymongo==3.12.3 #this must be the version of pymongo 
+
+# pymongo version greater than 3.12.3 does not support and throws error.
+
+pip install pytz
+
+pip install mongoengine # in docker terminal for app
+
+https://www.section.io/engineering-education/implement-multitenancy-with-multiple-databases-in-django/  ## important article for connection of mongo
+
+add mongoengine configs in project folder by creating file utils.py 
+
+# utils.py 
+
+from pymongo import MongoClient
+def get_db_handle(db_name, host, port, username, password):
+    client = MongoClient(host=host,
+                         port=int(port),
+                         username=username,
+                         password=password
+                        )
+    db_handle = client[db_name]
+    return db_handle, client
+def get_collection_handle(db_handle,collection_name):
+    return db_handle[collection_name]
